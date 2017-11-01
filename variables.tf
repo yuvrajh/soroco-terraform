@@ -4,10 +4,10 @@ variable "version" {
     description = "The version of TF"
 }
 
-variable "environment"      { default = "PROD"   description = "ENV" }
+variable "environment"      { default = "staging"   description = "ENV" }
 variable "project"          { default = "SOROCO"   description = "PROJECT" }
-variable "aws_account_id"   { default = "215268188550" description = "replace with your aws account id" }
-variable "aws_account_number"   { default = "215268188550" description = "replace with your aws account id" }
+variable "aws_account_id"   { default = "480833364711" description = "replace with your aws account id" }
+variable "aws_account_number"   { default = "480833364711" description = "replace with your aws account id" }
 
 variable "aws_account_name" { default = "electron" description = "replace with your aws account name" }
 
@@ -22,17 +22,17 @@ variable "soroco_b"          { default = "172.26.8.64/27"  description = "RDS Po
 variable "soroco_b1"         { default = "172.26.8.96/27"  description = "RDS PostgreSQL Subnet B1" }
 
 #Region & Availability Zones
-variable "aws_region"       { default = "us-east-1"  description = "PROD region 1" }
-variable "az_1"             { default = "us-east-1a"  description = "PROD az 1" }
-variable "az_2"             { default = "us-east-1b"  description = "PROD az 2" }
+variable "aws_region"       { default = "ap-south-1"  description = "PROD region 1" }
+variable "az_1"             { default = "ap-south-1a"  description = "PROD az 1" }
+variable "az_2"             { default = "ap-south-1b"  description = "PROD az 2" }
 
 
 ##AMI
 
 variable "ami" {
     default = {
-        us-east-1_amz_hvm =       "ami-5e8c9625" # Amazon Linux AMI 2017.09.rc-0.20170913 x86_64 HVM GP2
-        us-east-1_amz_hvm_rhel =  "ami-c998b6b2" # Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
+        ap-south-1_amz_hvm =       "ami-099fe766" # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
+        ap-south-1_amz_hvm_rhel =  "ami-e41b618b" # Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
         }
     description = "Latest Available AMIs"
 }
@@ -49,7 +49,7 @@ variable "instance_type" {
 }
 
 ##Key Pair
-variable "key_name"      { default = "20171101-awsprodkey"  description = "Create and Download the mentioned key before applying" }
+variable "key_name"      { default = "hdfclife-app"  description = "Create and Download the mentioned key before applying" }
 
 variable "ssh_user"      { default = "ubuntu"     description = "ssh user" }
 variable "sshrhel_user"  { default = "ec2-user"   description = "ssh user" }
@@ -67,6 +67,7 @@ variable "elb_account_number" {
         us-east-1 = "127311923021"
         us-west-1 = "027434742980"
 	eu-central-1 = "054676820928"
+        ap-south-1 = "718504428378"
     }
 }
 

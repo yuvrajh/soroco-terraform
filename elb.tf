@@ -23,9 +23,9 @@ resource "aws_elb" "elb_fe" {
     listener {
         instance_port =         "${var.http_port}"
         instance_protocol =     "http"
-        lb_port =               "${var.https_port}"
-        lb_protocol =           "https"
-        ssl_certificate_id =    "${var.web_ssl_certificate_id}"
+        lb_port =               "${var.http_port}"
+        lb_protocol =           "http"
+#        ssl_certificate_id =    "${var.web_ssl_certificate_id}"
     }
 
     health_check {
