@@ -42,7 +42,7 @@ variable "ami" {
 variable "instance_type" {
     default = {
         bastion =           "t2.micro"
-        application =       "t2.large"
+        application =       "t2.medium"
 
     }
     description = "AWS instance type (must be compatible with corresponding AMI)"

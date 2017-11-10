@@ -24,4 +24,14 @@ resource "aws_iam_instance_profile" "default_iam_instance_profile" {
     role = "${aws_iam_role.default_instance_role.name}"
 }
 
+data "template_file" "tpl_iamrolepolicy_ec2_cloudwatch_access" {
+    template = "${file("${path.module}/resources/policies/cloudwatch-ec2-access.json")}"
+}
+
+resource "aws_iam_role_policy" "iamrolepolicy_ec2_cloudwatch_access" {
+    name = "${var.environment}_ec2_cloudwatch_access"
+    role = "${aws_iam_role.default_instance_role.id}"
+    policy = "${data.template_file.tpl_iamrolepolicy_ec2_cloudwatch_access.rendered}"
+}
+
 

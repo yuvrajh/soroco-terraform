@@ -59,8 +59,9 @@ resource "aws_security_group" "sg_application" {
         from_port =     22
         to_port =       22
         protocol =      "tcp"
-        security_groups = ["${aws_security_group.sg_bastion.id}"]
+        cidr_blocks =   ["192.168.3.227/32","192.168.3.228/32","192.168.3.198/32","192.168.3.199/32","192.168.3.18/32","172.26.8.141/32"]
     }
+
 
 
     egress {
@@ -78,35 +79,6 @@ resource "aws_security_group" "sg_application" {
 }
 
 
-# Bastion
-resource "aws_security_group" "sg_bastion" {
-    description =       "Allows SSH traffic to the Bastion"
-    name =              "${var.environment}_sg_bastion"
-    vpc_id =            "${aws_vpc.vpc_soroco.id}"
-
-    ingress {
-        from_port =     22
-        to_port =       22
-        protocol =      "tcp"
-        cidr_blocks =   ["183.87.61.58/32", "219.65.95.10/32"]
-    }
-
-    egress {
-        from_port =     0
-        to_port =       0
-        protocol =      "-1"
-        cidr_blocks =   ["0.0.0.0/0"]
-    }
-
-    tags {
-        Name =          "${var.project}_sg_bastion"
-        Environment =   "${var.environment}"
-        Version =       "${var.version}"
-    }
-}
-
-
-# SG_RDS_PostgreSQL
 resource "aws_security_group" "sg_postgresql" {
     description =       "Allows DB connection to the App"
     name =              "${var.project}_sg_postgresql"
@@ -130,10 +102,36 @@ resource "aws_security_group" "sg_postgresql" {
     }
 
     tags {
-        Name =          "${var.project}_sg_bastion"
+        Name =          "${var.project}_sg_postgresql"
         Environment =   "${var.environment}"
         Version =       "${var.version}"
     }
 }
 
 
+# Bastion
+resource "aws_security_group" "sg_bastion" {
+    description =       "Allows SSH traffic to the Bastion"
+    name =              "${var.environment}_sg_bastion"
+    vpc_id =            "${aws_vpc.vpc_soroco.id}"
+
+    ingress {
+        from_port =     22
+        to_port =       22
+        protocol =      "tcp"
+        cidr_blocks =   ["0.0.0.0/0"]
+    }
+
+    egress {
+        from_port =     0
+        to_port =       0
+        protocol =      "-1"
+        cidr_blocks =   ["0.0.0.0/0"]
+    }
+
+    tags {
+        Name =          "${var.project}_sg_bastion"
+        Environment =   "${var.environment}"
+        Version =       "${var.version}"
+    }
+}

@@ -24,6 +24,7 @@ resource "aws_db_instance" "postgresql" {
   db_subnet_group_name       = "${aws_db_subnet_group.postgre_sg.name}"
   parameter_group_name       = "${aws_db_parameter_group.postgres_pg.name}"
   storage_encrypted          = "${var.storage_encrypted}"
+  monitoring_interval        = "60"
 
   tags {
     Name        = "${var.project}-postgresql"
