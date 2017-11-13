@@ -47,6 +47,15 @@ resource "aws_db_parameter_group" "postgres_pg" {
   name   = "postgres-pg"
   description = "postgres-pg9.6"
   family = "postgres9.6"
+  parameter {
+    name  = "log_statement"
+    value = "all"
+  }
+  parameter {
+    name  = "log_min_duration_statement"
+    value = "1"
+  }
+
 }
 
 
