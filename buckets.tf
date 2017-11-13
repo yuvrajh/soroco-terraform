@@ -26,3 +26,28 @@ data "template_file" "tpl_s3_elb_logging_policy" {
     }
 }
 
+
+resource "aws_s3_bucket" "ec2_config_bucket" {
+    acl =               "private"
+    bucket =            "${var.aws_region}-${lower(var.project)}-ec2-config-bucket"
+#    server_side_encryption = "AES256"
+    force_destroy =     true
+#    policy =            "${data.template_file.tpl_s3_elb_logging_policy.rendered}"
+
+#    depends_on =        [ "data.template_file.tpl_s3_elb_logging_policy" ]
+    logging {
+    target_bucket = "${aws_s3_bucket.ec2_config_bucket_log_bucket.id}"
+    target_prefix = "log/"
+  }
+
+    tags {
+        Environment =   "${var.environment}"
+        Name =          "ec2_config_bucket_${var.project}"
+    }
+}
+
+
+resource "aws_s3_bucket" "ec2_config_bucket_log_bucket" {
+  bucket = "${var.aws_region}-${lower(var.project)}-ec2-config-bucket-logs"
+  acl    = "log-delivery-write"
+}

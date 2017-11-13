@@ -34,4 +34,19 @@ resource "aws_iam_role_policy" "iamrolepolicy_ec2_cloudwatch_access" {
     policy = "${data.template_file.tpl_iamrolepolicy_ec2_cloudwatch_access.rendered}"
 }
 
+data "template_file" "tpl_iamrolepolicy_ec2_s3_config_access" {
+    template = "${file("${path.module}/resources/policies/ec2-access-to-s3-bucket.json")}"
+ vars {
+        aws_region =    "${var.aws_region}"
+        project    =    "${lower(var.project)}"
+    }
+
+}
+
+
+resource "aws_iam_role_policy" "iamrolepolicy_ec2_s3_access" {
+    name = "${var.environment}_ec2_s3bucket_access"
+    role = "${aws_iam_role.default_instance_role.id}"
+    policy = "${data.template_file.tpl_iamrolepolicy_ec2_s3_config_access.rendered}"
+}
 
