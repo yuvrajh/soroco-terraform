@@ -3,15 +3,26 @@
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": ["s3:ListBucket",
-        "s3:GetBucketLocation"],
-      "Resource": ["arn:aws:s3:::${aws_region}-${project}-ec2-config-bucket"]
+      "Action": ["s3:ListAllMyBuckets",
+        	 "s3:GetBucketLocation"],
+      "Resource": ["*"]
     },
+    {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::${aws_region}-${project}-ec2-config-bucket"
+            ]
+     },
     {
       "Effect": "Allow",
       "Action": [
         "s3:PutObject",
         "s3:GetObject",
+	"s3:ListBucket",
         "s3:DeleteObject"
       ],
       "Resource": ["arn:aws:s3:::${aws_region}-${project}-ec2-config-bucket/*"]
