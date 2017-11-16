@@ -39,6 +39,10 @@ resource "aws_route_table" "rt_nat_gw" {
 # Route to LOCAL For RDS
 resource "aws_route_table" "rt_rds" {
         vpc_id =                "${aws_vpc.vpc_soroco.id}"
+        route {
+        cidr_block =        "0.0.0.0/0"
+        nat_gateway_id =    "${aws_nat_gateway.nat_gateway_a.id}"
+        }
     
         tags {
         Environment =       "${var.environment}"

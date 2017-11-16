@@ -35,6 +35,9 @@ resource "aws_s3_bucket" "ec2_config_bucket" {
 #    policy =            "${data.template_file.tpl_s3_elb_logging_policy.rendered}"
 
 #    depends_on =        [ "data.template_file.tpl_s3_elb_logging_policy" ]
+    versioning {
+    enabled = true
+    }
     logging {
     target_bucket = "${aws_s3_bucket.ec2_config_bucket_log_bucket.id}"
     target_prefix = "log/"
