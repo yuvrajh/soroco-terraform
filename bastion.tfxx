@@ -1,12 +1,12 @@
 ##Bastion Host
 
 resource "aws_instance" "ec2_bastion" {
-    ami =                   "${lookup(var.ami, "${var.aws_region}_amz_hvm_rhel")}"
+    ami =                   "${lookup(var.ami, "${var.aws_region}_amz_hvm_awslinux")}"
     instance_type =         "${lookup(var.instance_type, "bastion")}"
-    key_name =              "${var.key_name}"
+    key_name =              "${var.tkey_name}"
     monitoring =            true
     source_dest_check =     false
-    iam_instance_profile =  "${aws_iam_instance_profile.default_iam_instance_profile.name}"
+#    iam_instance_profile =  "${aws_iam_instance_profile.default_iam_instance_profile.name}"
     subnet_id =             "${aws_subnet.subnet_public_dmz.id}"
 	root_block_device {
         volume_type           = "gp2"

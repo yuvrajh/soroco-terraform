@@ -31,7 +31,7 @@ resource "aws_elb" "elb_fe" {
     health_check {
         healthy_threshold =     2
         unhealthy_threshold =   2
-        target =                "HTTP:${var.http_port}/"
+        target =                "HTTP:${var.http_port}/v1/status"
         timeout =               3
         interval =              6
     }

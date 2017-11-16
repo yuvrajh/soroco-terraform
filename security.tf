@@ -53,7 +53,13 @@ resource "aws_security_group" "sg_application" {
         protocol =      "tcp"
 	security_groups = ["${aws_security_group.sg_elb.id}"]
     }
-	
+        #HTTPS
+    ingress {
+        from_port =     443
+        to_port =       443
+        protocol =      "tcp"
+        security_groups = ["${aws_security_group.sg_elb.id}"]
+    }	
 	# SSH
     ingress {
         from_port =     22
@@ -135,3 +141,33 @@ resource "aws_security_group" "sg_bastion" {
         Version =       "${var.version}"
     }
 }
+
+
+
+# script_server
+resource "aws_security_group" "sg_script_server" {
+    description =       "Allows SSH traffic from the Bastion"
+    name =              "${var.environment}_sg_script_server"
+    vpc_id =            "${aws_vpc.vpc_soroco.id}"
+
+    ingress {
+        from_port =     22
+        to_port =       22
+        protocol =      "tcp"
+        security_groups =   ["${aws_security_group.sg_bastion.id}"]
+    }
+
+    egress {
+        from_port =     0
+        to_port =       0
+        protocol =      "-1"
+        cidr_blocks =   ["0.0.0.0/0"]
+    }
+
+    tags {
+        Name =          "${var.project}_sg_script_server"
+        Environment =   "${var.environment}"
+        Version =       "${var.version}"
+    }
+}
+

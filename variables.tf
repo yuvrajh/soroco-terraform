@@ -33,6 +33,7 @@ variable "ami" {
     default = {
         ap-south-1_amz_hvm =       "ami-099fe766" # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
         ap-south-1_amz_hvm_rhel =  "ami-e41b618b" # Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
+        ap-south-1_amz_hvm_awslinux     =       "ami-2ed19c41" # Amazon Linux AMI 2017.09.1 (HVM), SSD Volume Type
         }
     description = "Latest Available AMIs"
 }
@@ -50,6 +51,7 @@ variable "instance_type" {
 
 ##Key Pair
 variable "key_name"      { default = "hdfclife-app"  description = "Create and Download the mentioned key before applying" }
+variable "tkey_name"      { default = "terraform-key"  description = "Create and Download the mentioned key before applying" }
 
 variable "ssh_user"      { default = "ubuntu"     description = "ssh user" }
 variable "sshrhel_user"  { default = "ec2-user"   description = "ssh user" }
@@ -146,4 +148,8 @@ variable "storage_encrypted" {
   default = false
 }
 
+#ASG Script
 
+variable "desired_cluster_size_script" {default = 1 description = "desired" }
+variable "min_cluster_size_script"     {default = 1 description = "min" }
+variable "max_cluster_size_script"     {default = 1 description = "max" }

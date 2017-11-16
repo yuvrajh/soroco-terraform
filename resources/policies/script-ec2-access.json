@@ -1,0 +1,39 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": ["s3:ListAllMyBuckets",
+                 "s3:GetBucketLocation"],
+      "Resource": ["*"]
+    },
+    {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "${aws_region}-${project}-rds-postgresql-logs-bucket"
+            ]
+     },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:DeleteObject"
+      ],
+      "Resource": ["${aws_region}-${project}-rds-postgresql-logs-bucket/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["rds:Describe*",
+		 "rds:Download*"
+		],
+      "Resource": ["*"]
+    }
+  ]
+}
+

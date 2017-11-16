@@ -51,3 +51,15 @@ resource "aws_s3_bucket" "ec2_config_bucket_log_bucket" {
   bucket = "${var.aws_region}-${lower(var.project)}-ec2-config-bucket-logs"
   acl    = "log-delivery-write"
 }
+
+
+resource "aws_s3_bucket" "rds_postgresql_logs_bucket" {
+  bucket = "${var.aws_region}-${lower(var.project)}-rds-postgresql-logs-bucket"
+  acl    = "private"
+  force_destroy =     true
+  tags {
+        Environment =   "${var.environment}"
+        Name =          "rds-postgresql-logs-bucket_${var.project}"
+    }
+}
+
