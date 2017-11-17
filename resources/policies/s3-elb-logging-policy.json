@@ -15,7 +15,21 @@
                 "arn:aws:s3:::${elb_logging_bucket}/ELB/APP/AWSLogs/${aws_account_number}/*"
             ],
             "Sid":"Stmt565960631791"
+        },
+        {
+            "Action":"s3:PutObject",
+            "Effect":"Allow",
+            "Principal":
+            {
+                "AWS":"arn:aws:iam::${elb_account_number}:root"
+            },
+            "Resource":
+            [
+                "arn:aws:s3:::${elb_logging_bucket}/INTERNALELB/APP/AWSLogs/${aws_account_number}/*"
+            ],
+            "Sid":"Stmt565960631791"
         }
+
     ],
     "Version":"2012-10-17"
 }

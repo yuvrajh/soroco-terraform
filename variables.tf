@@ -58,7 +58,7 @@ variable "sshrhel_user"  { default = "ec2-user"   description = "ssh user" }
 
 ##ELB Certificate ARN
 
-variable "web_ssl_certificate_id" { default =  "arn:aws:acm:us-east-1:215268188550:certificate/631548a8-2913-495a-9412-53eb2d835bc3"}
+variable "web_ssl_certificate_id" { default =  "arn:aws:acm:ap-south-1:480833364711:certificate/44882d94-447a-474c-90cb-6ef9af8b6a90"}
 
 
 # ELB Account Numbers

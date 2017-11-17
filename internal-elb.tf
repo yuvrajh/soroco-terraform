@@ -2,21 +2,21 @@
 
 # Front End
 
-resource "aws_elb" "elb_fe" {
-    name =                      "${var.project}-elb-fe"
+resource "aws_elb" "elb_fe_internal" {
+    name =                      "${lower(var.project)}-elb-fe"
     cross_zone_load_balancing = true
-    internal        = false
+    internal        = true
     security_groups =           ["${aws_security_group.sg_elb.id}"]
     subnets = [
-        "${aws_subnet.subnet_public_dmz.id}",
-        "${aws_subnet.subnet_public_dmz2.id}"
+        "${aws_subnet.subnet_private_application1.id}",
+        "${aws_subnet.subnet_private_application2.id}"
         ]
 
     depends_on = [ "aws_s3_bucket.elb_logging_bucket" ]
 
     access_logs {
         bucket =                "${aws_s3_bucket.elb_logging_bucket.bucket}"
-        bucket_prefix =         "ELB/APP"
+        bucket_prefix =         "INTERNALELB/APP"
         interval =              60
     }
 
@@ -45,7 +45,7 @@ resource "aws_elb" "elb_fe" {
     idle_timeout =              60
 
     tags {
-        Name =                  "${var.project}_elb_fe"
+        Name =                  "${lower(var.project)}_elb_fe"
         Environment =           "${var.environment}"
         Version =               "${var.version}"
     }
