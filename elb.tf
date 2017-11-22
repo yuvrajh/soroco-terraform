@@ -17,7 +17,7 @@ resource "aws_elb" "elb_fe" {
     access_logs {
         bucket =                "${aws_s3_bucket.elb_logging_bucket.bucket}"
         bucket_prefix =         "ELB/APP"
-        interval =              60
+        interval =              5
     }
 
     listener {

@@ -12,7 +12,8 @@
             },
             "Resource":
             [
-                "arn:aws:s3:::${elb_logging_bucket}/ELB/APP/AWSLogs/${aws_account_number}/*"
+                "arn:aws:s3:::${elb_logging_bucket}/ELB/APP/AWSLogs/${aws_account_number}/*",
+                "arn:aws:s3:::${elb_logging_bucket}/ALB/APP/AWSLogs/${aws_account_number}/*"
             ],
             "Sid":"Stmt565960631791"
         },
@@ -25,7 +26,9 @@
             },
             "Resource":
             [
-                "arn:aws:s3:::${elb_logging_bucket}/INTERNALELB/APP/AWSLogs/${aws_account_number}/*"
+                "arn:aws:s3:::${elb_logging_bucket}/INTERNALELB/APP/AWSLogs/${aws_account_number}/*",
+                "arn:aws:s3:::${elb_logging_bucket}/INTERNALALB/APP/AWSLogs/${aws_account_number}/*"
+                
             ],
             "Sid":"Stmt565960631791"
         }
