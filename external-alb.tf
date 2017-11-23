@@ -93,6 +93,19 @@ default_action {
 }
 
 
+resource "aws_lb_target_group_attachment" "external1" {
+  target_group_arn = "${aws_alb_target_group.webapp.arn}"
+  target_id        = "${aws_instance.ec2_app1.id}"
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "external2" {
+  target_group_arn = "${aws_alb_target_group.webapp.arn}"
+  target_id        = "${aws_instance.ec2_app2.id}"
+  port             = 80
+}
+
+
 #resource "aws_alb_listener_rule" "api-http" {
 #  listener_arn = "${aws_alb_listener.alb-http.arn}"
 #  priority = 1
