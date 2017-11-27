@@ -38,7 +38,12 @@ resource "aws_alb_target_group" "webappinternal" {
       path = "/v1/status"
           protocol = "HTTP"
           interval = 10
-  }
+}
+  stickiness {
+      type = "lb_cookie"
+      cookie_duration = 300
+      enabled = "true"
+}
 
   tags {
     Group = "${var.project}"
