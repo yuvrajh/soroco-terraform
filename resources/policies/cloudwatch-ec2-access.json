@@ -7,6 +7,10 @@
                 "cloudwatch:PutMetricData",
                 "cloudwatch:GetMetricStatistics",
                 "cloudwatch:ListMetrics",
+                "logs:CreateLogGroup",
+    	    	"logs:CreateLogStream",
+        	"logs:PutLogEvents",
+        	"logs:DescribeLogStreams",
                 "ec2:DescribeTags"
             ],
             "Resource": "*"

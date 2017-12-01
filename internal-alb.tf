@@ -30,18 +30,18 @@ resource "aws_alb_target_group" "webappinternal" {
   port = 80
   protocol = "HTTP"
   vpc_id = "${aws_vpc.vpc_soroco.id}"
-  deregistration_delay = 180
+  deregistration_delay = 90
   health_check {
       healthy_threshold = 2
-      unhealthy_threshold = 2
-      timeout = 5
+      unhealthy_threshold = 7
+      timeout = 8
       path = "/v1/status"
           protocol = "HTTP"
           interval = 10
 }
   stickiness {
       type = "lb_cookie"
-      cookie_duration = 300
+      cookie_duration = 180
       enabled = "true"
 }
 
@@ -97,17 +97,17 @@ default_action {
    }
 }
 
-resource "aws_lb_target_group_attachment" "internal2" {
-  target_group_arn = "${aws_alb_target_group.webappinternal.arn}"
-  target_id        = "${aws_instance.ec2_app2.id}"
-  port             = 80
-}
+#resource "aws_lb_target_group_attachment" "internal2" {
+#  target_group_arn = "${aws_alb_target_group.webappinternal.arn}"
+#  target_id        = "${aws_instance.ec2_app2.id}"
+#  port             = 80
+#}
 
-resource "aws_lb_target_group_attachment" "internal1" {
-  target_group_arn = "${aws_alb_target_group.webappinternal.arn}"
-  target_id        = "${aws_instance.ec2_app1.id}"
-  port             = 80
-}
+#resource "aws_lb_target_group_attachment" "internal1" {
+#  target_group_arn = "${aws_alb_target_group.webappinternal.arn}"
+#  target_id        = "${aws_instance.ec2_app1.id}"
+#  port             = 80
+#}
 
 #resource "aws_alb_listener_rule" "api-http" {
 #  listener_arn = "${aws_alb_listener.alb-http.arn}"

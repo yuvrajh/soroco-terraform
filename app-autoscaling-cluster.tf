@@ -6,8 +6,8 @@ data "template_file" "app_user_data" {
 }
 
 resource "aws_launch_configuration" "lc_appserver" {
-  name_prefix   = "app-server-lc-"
-  image_id      = "${lookup(var.ami, "${var.aws_region}_amz_hvm_app")}"
+  name_prefix   = "${lower(var.project)}-app-green-lc-"
+  image_id      = "${lookup(var.ami, "${var.aws_region}_amz_hvm_app_auto")}"
   instance_type = "${lookup(var.instance_type, "application_autoscale")}"
   iam_instance_profile = "${aws_iam_instance_profile.default_iam_instance_profile.name}" 
   key_name = "${var.key_name}"
@@ -28,7 +28,7 @@ resource "aws_launch_configuration" "lc_appserver" {
   }
 }
 # ASG App Server
-resource "aws_autoscaling_group" "asg_sorocoapp_server" {
+resource "aws_autoscaling_group" "asg_sorocoapp" {
     enabled_metrics = [
         "GroupMinSize",
         "GroupMaxSize",
@@ -40,19 +40,19 @@ resource "aws_autoscaling_group" "asg_sorocoapp_server" {
         "GroupTotalInstances"
     ]
     desired_capacity =          "${var.desired_cluster_size_app}"
-    default_cooldown =          210
-    health_check_grace_period = 180
+    default_cooldown =          480
+    health_check_grace_period = 400
     health_check_type =         "ELB"
     launch_configuration =      "${aws_launch_configuration.lc_appserver.name}"
     min_size =                  "${var.min_cluster_size_app}"
     max_size =                  "${var.max_cluster_size_app}"
-    name =                      "${lower(var.project)}-{var.environment}_app_asg"
-    target_group_arns = ["${aws_alb_target_group.webappinternal.arn}"]
+    name =                      "${lower(var.project)}-${var.environment}-app-green-asg"
+    target_group_arns = ["${aws_alb_target_group.webapp.arn}", "${aws_alb_target_group.webappinternal.arn}"]
     vpc_zone_identifier = [
         "${aws_subnet.subnet_private_application1.id}",
         "${aws_subnet.subnet_private_application2.id}"
         ]
-
+    lifecycle { ignore_changes = [ "desired_capacity", "min_size", "max_size" ] }
     tag = {
         key =                   "Environment"
         value =                 "${var.environment}"
@@ -60,7 +60,7 @@ resource "aws_autoscaling_group" "asg_sorocoapp_server" {
     }
     tag = {
         key =                   "Name"
-        value =                 "${lower(var.project)}-{var.environment}_app_asg"
+        value =                 "${lower(var.project)}-${var.environment}-app-green-asg"
         propagate_at_launch =   true
     }
     tag = {

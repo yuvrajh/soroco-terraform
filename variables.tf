@@ -34,7 +34,8 @@ variable "ami" {
         ap-south-1_amz_hvm =       "ami-099fe766" # Ubuntu Server 16.04 LTS (HVM), SSD Volume Type
         ap-south-1_amz_hvm_rhel =  "ami-e41b618b" # Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
         ap-south-1_amz_hvm_awslinux  =  "ami-2ed19c41"   # Amazon Linux AMI 2017.09.1 (HVM), SSD Volume Type
-        ap-south-1_amz_hvm_app       =  "ami-ab1f51c4"   #soroco app + Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
+        ap-south-1_amz_hvm_app       =  "ami-ab1f51c4"   #soroco app 24-nov-2017 + Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
+        ap-south-1_amz_hvm_app_auto       =  "ami-c2155cad"   #soroco app 01 -dec-2017 + Red Hat Enterprise Linux 7.4 (HVM), SSD Volume Type
 
         }
     description = "Latest Available AMIs"
@@ -93,7 +94,7 @@ variable "engine_version" {
 }
 
 variable "dbinstance_type" {
-  default = "db.t2.large"
+  default = "db.m4.large"
 }
 
 variable "storage_type" {
@@ -113,7 +114,7 @@ variable "database_port" {
 }
 
 variable "backup_retention_period" {
-  default = "7"
+  default = "30"
 }
 
 variable "backup_window" {
@@ -161,5 +162,9 @@ variable "max_cluster_size_script"     {default = 1 description = "max" }
 
 variable "desired_cluster_size_app" {default = 2 description = "desired" }
 variable "min_cluster_size_app"     {default = 2 description = "min" }
-variable "max_cluster_size_app"     {default = 6 description = "max" }
+variable "max_cluster_size_app"     {default = 8 description = "max" }
+
+variable "desired_cluster_size_app_blue" {default = 0 description = "desired" }
+variable "min_cluster_size_app_blue"     {default = 0 description = "min" }
+variable "max_cluster_size_app_blue"     {default = 8 description = "max" }
 
